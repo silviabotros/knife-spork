@@ -91,6 +91,10 @@ module KnifeSpork
         (begin `git config user.name`.chomp; rescue nil; end || ENV['USERNAME'] || ENV['USER']).strip
       end
 
+      def chef_server
+        (begin `knife block list | grep "Selected" | awk '{print $2}'`.chomp; rescue nil; end || ENV['CHEF_SERVER'] || "Chef Server"
+      end
+
       # Wrapper method around require that attempts to include the associated file. If it does not exist
       # or cannot be loaded, an nice error is produced instead of blowing up.
       def safe_require(file)
